@@ -7,6 +7,7 @@ package prog07;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 import javax.swing.*;
 import prog07.Model.Calculadora;
 
@@ -41,6 +42,9 @@ public class PROG07 extends JFrame {
         
 private static final long serialVersionUID =
 6364109492657918782L;
+
+static String operacion = "";
+static double resul = 0;
     
         public PROG07(){
             
@@ -54,9 +58,7 @@ private static final long serialVersionUID =
         txtSecondDisplay.setEditable(false);
    
         
-        
-        //bucle para generar numero del 0 al 9
-
+       
      
             suma    = new JButton("+");
             resta   = new JButton("-");
@@ -74,8 +76,6 @@ private static final long serialVersionUID =
             btn9    = new JButton("9");
             btnBorrar = new JButton("C");
             resultado = new JButton("=");
-           
-            
             
             
  
@@ -86,30 +86,30 @@ private static final long serialVersionUID =
         panel = new JPanel();
         // Absolute Layout (colocación manual)
         panel.setLayout(null);
-        txtDisplay.setBounds(100, 25, 206, 20);
-        txtSecondDisplay.setBounds(100, 50, 206, 20);
+        txtDisplay.setBounds(70, 25, 306, 20);
+        txtSecondDisplay.setBounds(70, 50, 306, 20);
         
-        suma.setBounds(105, 100, 35, 45);
-        resta.setBounds(105, 140, 35, 45);
-        multi.setBounds(105, 180, 35, 45);
-        div.setBounds(105,  220, 35, 45);
+        suma.setBounds(125, 100, 35, 45);
+        resta.setBounds(125, 140, 35, 45);
+        multi.setBounds(125, 180, 35, 45);
+        div.setBounds(125,  220, 35, 45);
         
-        btn1.setBounds(155, 100, 35, 45);
-        btn2.setBounds(190, 100, 35, 45);
-        btn3.setBounds(225, 100, 35, 45);
+        btn1.setBounds(190, 100, 35, 45);
+        btn2.setBounds(225, 100, 35, 45);
+        btn3.setBounds(260, 100, 35, 45);
         
-        btn4.setBounds(155, 140, 35, 45);
-        btn5.setBounds(190, 140, 35, 45);
-        btn6.setBounds(225, 140, 35, 45);
+        btn4.setBounds(190, 140, 35, 45);
+        btn5.setBounds(225, 140, 35, 45);
+        btn6.setBounds(260, 140, 35, 45);
         
-        btn7.setBounds(155, 180, 35, 45);
-        btn8.setBounds(190, 180, 35, 45);
-        btn9.setBounds(225, 180, 35, 45);
+        btn7.setBounds(190, 180, 35, 45);
+        btn8.setBounds(225, 180, 35, 45);
+        btn9.setBounds(260, 180, 35, 45);
         
-        btn0.setBounds(190, 220, 35, 45);
+        btn0.setBounds(225, 220, 35, 45);
         
-        resultado.setBounds(225, 220, 35, 45);
-        btnBorrar.setBounds(155, 220, 35, 45);
+        resultado.setBounds(260, 220, 35, 45);
+        btnBorrar.setBounds(190, 220, 35, 45);
         
         suma.addActionListener(sumas);
         resta.addActionListener(restas);
@@ -153,15 +153,14 @@ private static final long serialVersionUID =
         
         
      
-
    
         
         setContentPane(panel);
         
-       txtSecondDisplay.setText("Calculadora Inteligente");
+       txtSecondDisplay.setText("Calculadora INC");
        
             // Título de la ventana
-       setTitle("Algo se esta cocinando");
+       setTitle("ilCalculattoreNovissimo");
        
        // Posición de la ventana: x, y, width, height
        setBounds(400, 200, 450, 300);
@@ -169,7 +168,7 @@ private static final long serialVersionUID =
        setLocationRelativeTo(null);
     
        
-       
+
        
         }
         
@@ -179,13 +178,30 @@ private static final long serialVersionUID =
 ActionListener sumas = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
-
-
+            
+           operacion = e.getActionCommand(); 
+           String varSumas = txtSecondDisplay.getText();
+            txtDisplay.setEditable(true);
+            btn1.setEnabled(true);
+            btn2.setEnabled(true);
+            btn3.setEnabled(true);
+            btn4.setEnabled(true);
+            btn5.setEnabled(true);
+            btn6.setEnabled(true);
+            btn7.setEnabled(true);
+            btn8.setEnabled(true);
+            btn9.setEnabled(true);
+            btn0.setEnabled(true);
+            resultado.setEnabled(true);
            
             
-           String varSumas = txtSecondDisplay.getText();
-            
-if("Calculadora Inteligente".equals(varSumas) ){
+if("Calculadora INC".equals(varSumas) ){
+    
+    
+      suma.setEnabled(false);
+      resta.setEnabled(false);
+      div.setEnabled(false);
+      multi.setEnabled(false);
     
   String factor1 = txtDisplay.getText();
 
@@ -197,30 +213,15 @@ txtSecondDisplay.setText("Suma");
 
 
 
+
 }else{
-    
-    String factor1 = txtSecondDisplay.getText();
-
-long fact1 = Long.parseLong(factor1);
-    
-calcu.setFactor1(fact1);
-txtSecondDisplay.setText("Suma++");
-
-    
-    
-    
-    
+        
+    calcu.setFactor1(resul);
+    txtSecondDisplay.setText("+ " + resul);
 
 }
 
 txtDisplay.setText("");
-
-
-
-
-
-
-
 
 }
        
@@ -230,11 +231,31 @@ ActionListener restas = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
             
-            
- String varRestas = txtSecondDisplay.getText();
+            operacion = e.getActionCommand();
+            String varRestas = txtSecondDisplay.getText();
+            txtDisplay.setEditable(true);
+            btn1.setEnabled(true);
+            btn2.setEnabled(true);
+            btn3.setEnabled(true);
+            btn4.setEnabled(true);
+            btn5.setEnabled(true);
+            btn6.setEnabled(true);
+            btn7.setEnabled(true);
+            btn8.setEnabled(true);
+            btn9.setEnabled(true);
+            btn0.setEnabled(true);
+            resultado.setEnabled(true);
+        
+           
+
             
 
- if( "Calculadora Inteligente".equals(varRestas)){
+ if( "Calculadora INC".equals(varRestas)){
+     
+      suma.setEnabled(false);
+      resta.setEnabled(false);
+      div.setEnabled(false);
+      multi.setEnabled(false);
      
                 
     String factor1 = txtDisplay.getText();
@@ -244,10 +265,9 @@ ActionListener restas = new ActionListener(){
 
 }else{
      
-    String factor1 = txtSecondDisplay.getText();
-    long fact1 = Long.parseLong(factor1);   
-    calcu.setFactor1(fact1);
-    txtSecondDisplay.setText("Resta++");
+  
+    calcu.setFactor1(resul);
+    txtSecondDisplay.setText("- " + resul);
  
 }
 
@@ -263,10 +283,29 @@ txtDisplay.setText("");
 
 ActionListener divides = new ActionListener(){
     
-        public void actionPerformed(ActionEvent e){    
-        String varDivides = txtSecondDisplay.getText();
-
-if( "Calculadora Inteligente".equals(varDivides)){
+        public void actionPerformed(ActionEvent e){ 
+        
+            operacion = e.getActionCommand();
+            String varDivides = txtSecondDisplay.getText();
+            txtDisplay.setEditable(true);
+            btn1.setEnabled(true);
+            btn2.setEnabled(true);
+            btn3.setEnabled(true);
+            btn4.setEnabled(true);
+            btn5.setEnabled(true);
+            btn6.setEnabled(true);
+            btn7.setEnabled(true);
+            btn8.setEnabled(true);
+            btn9.setEnabled(true);
+            btn0.setEnabled(true);
+            resultado.setEnabled(true);
+            
+if( "Calculadora INC".equals(varDivides)){
+    
+      suma.setEnabled(false);
+      resta.setEnabled(false);
+      div.setEnabled(false);
+      multi.setEnabled(false);
     
      String factor1 = txtDisplay.getText();
      long fact1 = Long.parseLong(factor1);
@@ -276,10 +315,8 @@ if( "Calculadora Inteligente".equals(varDivides)){
 }else{
     
     
-    String factor1 = txtSecondDisplay.getText();
-    long fact1 = Long.parseLong(factor1);
-    calcu.setFactor1(fact1);
-    txtSecondDisplay.setText("Division++");
+    calcu.setFactor1(resul);
+    txtSecondDisplay.setText("/ "+ resul);
     
     
     
@@ -297,26 +334,45 @@ txtDisplay.setText("");
 
 ActionListener multiplicas = new ActionListener(){
     
+    
+    
 
     
         public void actionPerformed(ActionEvent e){
             
 String varMultiplicas = txtSecondDisplay.getText();
 
-if( "Calculadora Inteligente".equals(varMultiplicas)){
+            operacion = e.getActionCommand();
+            txtDisplay.setEditable(true);
+            btn1.setEnabled(true);
+            btn2.setEnabled(true);
+            btn3.setEnabled(true);
+            btn4.setEnabled(true);
+            btn5.setEnabled(true);
+            btn6.setEnabled(true);
+            btn7.setEnabled(true);
+            btn8.setEnabled(true);
+            btn9.setEnabled(true);
+            btn0.setEnabled(true);
+            resultado.setEnabled(true);
+
+if( "Calculadora INC".equals(varMultiplicas)){
     
 
+      suma.setEnabled(false);
+      resta.setEnabled(false);
+      div.setEnabled(false);
+      multi.setEnabled(false);
+      
     String factor1 = txtDisplay.getText();
     long fact1 = Long.parseLong(factor1);
     calcu.setFactor1(fact1);
-    txtSecondDisplay.setText("Mulplicacion");
+    txtSecondDisplay.setText("Multiplicacion");
 
 }else{
-       
-     String factor1 = txtSecondDisplay.getText();
-    long fact1 = Long.parseLong(factor1);    
-    calcu.setFactor1(fact1);
-    txtSecondDisplay.setText("Multiplicacion++");
+    
+    calcu.setFactor1(resul);
+    txtSecondDisplay.setText("* "+ resul);
     
     
 }
@@ -334,58 +390,108 @@ ActionListener resultados = new ActionListener(){
         public void actionPerformed(ActionEvent e){
 
             String factor2 = txtDisplay.getText();
+            
+            txtDisplay.setEditable(false);
 
             long fact2 = Long.parseLong(factor2);
+            
 
-
+           
+            
             calcu.setFactor2(fact2);
             
-           long f1 = calcu.getFactor1();
+           double f1 = calcu.getFactor1();
            System.out.println(f1);
-           long f2 = calcu.getFactor2();
+           double f2 = calcu.getFactor2();
+           
+           if (f1 == 0);
+            resul = 0;
+            
+            if (f2 == 0);
+            resul = 0;
+            
            System.out.println(f2);
             
             
-            String op = txtSecondDisplay.getText();
+            var op = txtSecondDisplay.getText();
             
-            switch (op){
+            btn1.setEnabled(false);
+            btn2.setEnabled(false);
+            btn3.setEnabled(false);
+            btn4.setEnabled(false);
+            btn5.setEnabled(false);
+            btn6.setEnabled(false);
+            btn7.setEnabled(false);
+            btn8.setEnabled(false);
+            btn9.setEnabled(false);
+            btn0.setEnabled(false);
+            resultado.setEnabled(false);
+            suma.setEnabled(true);
+            resta.setEnabled(true);
+            div.setEnabled(true);
+            multi.setEnabled(true);
             
-                case "Suma", "Suma++":
+         
+            
+            switch (operacion) {
+            
+                case "+":
                     
-                     long resultado = f1 + f2;
-                     String valResultado = String.valueOf(resultado);
-                     txtSecondDisplay.setText(valResultado);
+                     resul = f1 + f2;
+                     String valResultado = String.valueOf(resul);
+                     txtSecondDisplay.setText( f1 + " + " + f2 + " = "+valResultado);
                      
                      calcu.setFactor1(0);
                      calcu.setFactor2(0);
                                 break;
-                          
-                
-                case "Resta", "Resta++":
+                                
                     
-                     long resultadoResta = f1 - f2;
-                     String valResultadoResta = String.valueOf(resultadoResta);
-                     txtSecondDisplay.setText(valResultadoResta);
+              
+                
+                case "-":
+                    
+                     resul = f1 - f2;
+                     String valResultadoResta = String.valueOf(resul);
+                     txtSecondDisplay.setText(f1 + " - " + f2 + " = "+valResultadoResta);
                      
                      calcu.setFactor1(0);
                      calcu.setFactor2(0);
                     break;
                 
-                case "Division", "Division++":
-                    
-                    long resultadodiv = f1 / f2;
-                     String valResultadodiv = String.valueOf(resultadodiv);
-                     txtSecondDisplay.setText(valResultadodiv);
+                case "/":
+                    if ((f1 == 0)||(f2 == 0)){
+                    resul = 0;
+                    txtSecondDisplay.setText("Error");
+                                btn1.setEnabled(false);
+                                btn2.setEnabled(false);
+                                btn3.setEnabled(false);
+                                btn4.setEnabled(false);
+                                btn5.setEnabled(false);
+                                btn6.setEnabled(false);
+                                btn7.setEnabled(false);
+                                btn8.setEnabled(false);
+                                btn9.setEnabled(false);
+                                btn0.setEnabled(false);
+                                resultado.setEnabled(false);
+                                suma.setEnabled(false);
+                                resta.setEnabled(false);
+                                div.setEnabled(false);
+                                multi.setEnabled(false);
+                    }else{
+                    resul = f1 / f2;
+                     String valResultadodiv = String.valueOf(resul);
+                     txtSecondDisplay.setText(f1 + " / " + f2 + " = "+valResultadodiv);}
+                     
                      
                      calcu.setFactor1(0);
                      calcu.setFactor2(0);
                     break;
                     
-                case "Multiplicacion", "Multiplicacion++":
+                case "*":
                      
-                    long resultadoMul = f1 * f2;
-                     String valResultadoMul = String.valueOf(resultadoMul);
-                     txtSecondDisplay.setText(valResultadoMul);
+                     resul = f1 * f2;
+                     String valResultadoMul = String.valueOf(resul);
+                     txtSecondDisplay.setText(f1 + " * " + f2 + " = "+ valResultadoMul);
                      
                      calcu.setFactor1(0);
                      calcu.setFactor2(0);
@@ -511,11 +617,27 @@ ActionListener borrar = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
             
-                     txtDisplay.setText("");
-                     txtSecondDisplay.setText("Calculadora Inteligente");
-                     calcu.setFactor1(0);
-                     calcu.setFactor2(0);
+                    btn1.setEnabled(true);
+                    btn2.setEnabled(true);
+                    btn3.setEnabled(true);
+                    btn4.setEnabled(true);
+                    btn5.setEnabled(true);
+                    btn6.setEnabled(true);
+                    btn7.setEnabled(true);
+                    btn8.setEnabled(true);
+                    btn9.setEnabled(true);
+                    btn0.setEnabled(true);
+                    resultado.setEnabled(true);
+                    txtDisplay.setText("");
+                    suma.setEnabled(true);
+                    resta.setEnabled(true);
+                    div.setEnabled(true);
+                     multi.setEnabled(true);
+                    txtSecondDisplay.setText("Calculadora INC");
+                    calcu.setFactor1(0);
+                    calcu.setFactor2(0);
 
+                    resul = 0;
 
         }
         
@@ -530,6 +652,8 @@ ActionListener borrar = new ActionListener(){
     public static void main(String[] args) {
      
 
+        
+        
        
         
        

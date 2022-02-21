@@ -13,16 +13,16 @@ package prog07.Model;
  */
 public class Calculadora {
     
-    long resultado = 0;
-    long factor1   = 0;
-    long factor2   = 0;
+    double resultado = 0;
+    double factor1   = 0;
+    double factor2   = 0;
     String operacion = null;
 
         
     public Calculadora() {
     }
     
-      public Calculadora(long resultado, long factor1, long factor2, String operacion) {
+      public Calculadora(double resultado, double factor1, double factor2, String operacion) {
          this.resultado = resultado;
          this.factor1 = factor1;
          this.factor2 = factor2;
@@ -36,15 +36,15 @@ public class Calculadora {
         return "Calculadora{" + "resultado=" + resultado + ", factor1=" + factor1 + ", factor2=" + factor2 + ", operacion=" + operacion + '}';
     }
 
-    public void setResultado(long resultado) {
+    public void setResultado(double resultado) {
         this.resultado = resultado;
     }
 
-    public void setFactor1(long factor1) {
+    public void setFactor1(double factor1) {
         this.factor1 = factor1;
     }
 
-    public void setFactor2(long factor2) {
+    public void setFactor2(double factor2) {
         this.factor2 = factor2;
     }
 
@@ -54,15 +54,15 @@ public class Calculadora {
 
     
 
-    public long getResultado() {
+    public double getResultado() {
         return resultado;
     }
 
-    public long getFactor1() {
+    public double getFactor1() {
         return factor1;
     }
 
-    public long getFactor2() {
+    public double getFactor2() {
         return factor2;
     }
 
