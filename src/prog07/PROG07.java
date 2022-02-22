@@ -4,10 +4,9 @@
  */
 package prog07;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
 import javax.swing.*;
 import prog07.Model.Calculadora;
 
@@ -38,15 +37,18 @@ public class PROG07 extends JFrame {
         private JButton btn9;
         private JButton btnBorrar;
         private JButton resultado;
-        
+        private JButton btnIcon;
+         
 //Variables utiles para la calculadora
 static String operacion = "";
 
 //Controlamos si la cuenta sigue abierta y asignamos el resultado como el primer factor
 static boolean abierta = false;
 static double resul = 0;
+
     
         public PROG07(){
+            
             BarDisplay1 = new JTextField();
             BarDisplay2 = new JTextField();
             BarDisplay2.setEditable(false);
@@ -75,23 +77,45 @@ static double resul = 0;
         // Absolute Layout (colocación manual)
         panel.setLayout(null);
         BarDisplay1.setBounds(70, 25, 306, 20);
-        BarDisplay2.setBounds(70, 50, 306, 20); 
+        Font font1 = new Font("SansSerif", Font.BOLD, 15);
+        BarDisplay1.setFont(font1);
+        BarDisplay1.setToolTipText("Escribe aqui");
+        BarDisplay2.setBounds(70, 50, 306, 20);
+        BarDisplay2.setToolTipText("Observa");
         suma.setBounds(125, 100, 35, 45);
+        suma.setToolTipText("Suma");
         resta.setBounds(125, 140, 35, 45);
+        resta.setToolTipText("Resta");
         multi.setBounds(125, 180, 35, 45);
-        div.setBounds(125,  220, 35, 45);    
+        multi.setToolTipText("Multiplicacion");
+        div.setBounds(125,  220, 35, 45);
+        div.setToolTipText("Division");
         btn1.setBounds(190, 100, 35, 45);
+        btn1.setToolTipText("uno");
         btn2.setBounds(225, 100, 35, 45);
+        btn2.setToolTipText("dos");
         btn3.setBounds(260, 100, 35, 45);
+        btn3.setToolTipText("tres");
         btn4.setBounds(190, 140, 35, 45);
+        btn4.setToolTipText("cuatro");
         btn5.setBounds(225, 140, 35, 45);
+        btn5.setToolTipText("cinco");
         btn6.setBounds(260, 140, 35, 45);
+        btn6.setToolTipText("seis");
         btn7.setBounds(190, 180, 35, 45);
+        btn7.setToolTipText("siete");
         btn8.setBounds(225, 180, 35, 45);
+        btn8.setToolTipText("ocho");
         btn9.setBounds(260, 180, 35, 45);
+        btn9.setToolTipText("nueve");
         btn0.setBounds(225, 220, 35, 45);
+        btn1.setToolTipText("cero");
         resultado.setBounds(260, 220, 35, 45);
+        resultado.setToolTipText("Calcular resultado");
         btnBorrar.setBounds(190, 220, 35, 45);
+        btnBorrar.setToolTipText("Borrar todo");
+        
+
         
         
         // Creo los listeners de la botonera
@@ -137,10 +161,11 @@ static double resul = 0;
         //Seteamos los botones en el panel
         setContentPane(panel);
         
+       BarDisplay1.setText("0");
        BarDisplay2.setText("Hagamos cuentas...");
        
             // Título de la ventana
-       setTitle("ilCalculattoreNovissimo");
+       setTitle("ilCalculattoreNovissimo®");
        
        // Posición de la ventana: x, y, width, height
        setBounds(400, 200, 450, 300);
@@ -152,7 +177,19 @@ static double resul = 0;
        
         }
         
+
+        
+//Funcion para quitar el 0 inicial        
+void QuitarCero(String s){
+    
+    if("0".equals(s)){
+    BarDisplay1.setText("");
+    };
+    
+}
+
 //Funcion para des/activar todos los botones salvo los de operacion
+        
 void ActivarBotones(boolean v){
 
             BarDisplay1.setEditable(v);
@@ -176,6 +213,9 @@ void ActivarOps(boolean v){
             div.setEnabled(v);
             multi.setEnabled(v);
 }
+
+
+
 
 
 //Escucho la accion del boton 
@@ -300,7 +340,6 @@ ActionListener multiplicas = new ActionListener(){
 
 
 ActionListener resultados = new ActionListener(){
-    
         public void actionPerformed(ActionEvent e){
 
             //Cancelamos la edicion mediante teclado de la barra de arriba
@@ -382,6 +421,8 @@ ActionListener resultados = new ActionListener(){
 ActionListener boton0 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
+        
+        QuitarCero(BarDisplay1.getText()); 
 
 String Display = BarDisplay1.getText() + btn0.getText();
 
@@ -393,43 +434,49 @@ BarDisplay1.setText(Display);
 ActionListener boton1 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
+            
+          QuitarCero(BarDisplay1.getText()); 
 
 String Display = BarDisplay1.getText() + btn1.getText();
 
+
+
 BarDisplay1.setText(Display);
-
-
 }
+        
 };       
 ActionListener boton2 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
+            
+        QuitarCero(BarDisplay1.getText()); 
+        String Display = BarDisplay1.getText() + btn2.getText();
+        BarDisplay1.setText(Display);
+        }
+        
+ };
 
-String Display = BarDisplay1.getText() + btn2.getText();
 
-BarDisplay1.setText(Display);
-
-
-}
-        };
 ActionListener boton3 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
-
-String Display = BarDisplay1.getText() + btn3.getText();
-
-BarDisplay1.setText(Display);
+        
+        QuitarCero(BarDisplay1.getText()); 
+        String Display = BarDisplay1.getText() + btn3.getText();
+        BarDisplay1.setText(Display);
 
 
 }
         };
+
 ActionListener boton4 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
-
-String Display = BarDisplay1.getText() + btn4.getText();
-
-BarDisplay1.setText(Display);
+            
+          
+        QuitarCero(BarDisplay1.getText()); 
+        String Display = BarDisplay1.getText() + btn4.getText();
+        BarDisplay1.setText(Display);
 
 
 }
@@ -437,10 +484,10 @@ BarDisplay1.setText(Display);
 ActionListener boton5 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
-
-String Display = BarDisplay1.getText() + btn5.getText();
-
-BarDisplay1.setText(Display);
+       
+        QuitarCero(BarDisplay1.getText()); 
+        String Display = BarDisplay1.getText() + btn5.getText();
+        BarDisplay1.setText(Display);
 
 
 }
@@ -449,9 +496,9 @@ ActionListener boton6 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = BarDisplay1.getText() + btn6.getText();
-
-BarDisplay1.setText(Display);
+        QuitarCero(BarDisplay1.getText()); 
+        String Display = BarDisplay1.getText() + btn6.getText();
+        BarDisplay1.setText(Display);
 
 
 }
@@ -460,9 +507,9 @@ ActionListener boton7 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = BarDisplay1.getText() + btn7.getText();
-
-BarDisplay1.setText(Display);
+        QuitarCero(BarDisplay1.getText()); 
+        String Display = BarDisplay1.getText() + btn7.getText();
+        BarDisplay1.setText(Display);
 
 
 }
@@ -471,9 +518,9 @@ ActionListener boton8 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = BarDisplay1.getText() + btn8.getText();
-
-BarDisplay1.setText(Display);
+        QuitarCero(BarDisplay1.getText()); 
+        String Display = BarDisplay1.getText() + btn8.getText();
+        BarDisplay1.setText(Display);
 
 
 }
@@ -482,9 +529,9 @@ ActionListener boton9 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = BarDisplay1.getText() + btn9.getText();
-
-BarDisplay1.setText(Display);
+        QuitarCero(BarDisplay1.getText()); 
+        String Display = BarDisplay1.getText() + btn9.getText();
+        BarDisplay1.setText(Display);
 
         }
 };
@@ -498,7 +545,7 @@ ActionListener borrar = new ActionListener(){
                     ActivarOps(true);
                     abierta = false;
            
-                    BarDisplay1.setText("");
+                    BarDisplay1.setText("0");
                     BarDisplay2.setText("Hagamos cuentas...");
                     calcu.setFactor1(0);
                     calcu.setFactor2(0);
