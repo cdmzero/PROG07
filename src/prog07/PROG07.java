@@ -16,11 +16,12 @@ import prog07.Model.Calculadora;
  * @author jfunez
  */
 public class PROG07 extends JFrame {
+   // Inicializacion de los diferentes componentes 
     
         Calculadora calcu = new Calculadora();  
         private JPanel panel;
-        private JTextField txtDisplay;
-        private JTextField txtSecondDisplay;
+        private JTextField BarDisplay1;
+        private JTextField BarDisplay2;
         private JButton suma;
         private JButton resta;
         private JButton div;
@@ -37,29 +38,21 @@ public class PROG07 extends JFrame {
         private JButton btn9;
         private JButton btnBorrar;
         private JButton resultado;
-
-
         
-private static final long serialVersionUID =
-6364109492657918782L;
-
+//Variables utiles para la calculadora
 static String operacion = "";
+
+//Controlamos si la cuenta sigue abierta y asignamos el resultado como el primer factor
+static boolean abierta = false;
 static double resul = 0;
     
         public PROG07(){
-            
-  
-        
-        txtDisplay = new JTextField();
-       
-        
-        txtSecondDisplay = new JTextField();
-        
-        txtSecondDisplay.setEditable(false);
+            BarDisplay1 = new JTextField();
+            BarDisplay2 = new JTextField();
+            BarDisplay2.setEditable(false);
    
         
-       
-     
+            // Construccion de botonera
             suma    = new JButton("+");
             resta   = new JButton("-");
             multi   = new JButton("*");
@@ -77,40 +70,31 @@ static double resul = 0;
             btnBorrar = new JButton("C");
             resultado = new JButton("=");
             
-            
- 
-       
-
-           
-        
+        // Panel de botonera
         panel = new JPanel();
         // Absolute Layout (colocación manual)
         panel.setLayout(null);
-        txtDisplay.setBounds(70, 25, 306, 20);
-        txtSecondDisplay.setBounds(70, 50, 306, 20);
-        
+        BarDisplay1.setBounds(70, 25, 306, 20);
+        BarDisplay2.setBounds(70, 50, 306, 20); 
         suma.setBounds(125, 100, 35, 45);
         resta.setBounds(125, 140, 35, 45);
         multi.setBounds(125, 180, 35, 45);
-        div.setBounds(125,  220, 35, 45);
-        
+        div.setBounds(125,  220, 35, 45);    
         btn1.setBounds(190, 100, 35, 45);
         btn2.setBounds(225, 100, 35, 45);
         btn3.setBounds(260, 100, 35, 45);
-        
         btn4.setBounds(190, 140, 35, 45);
         btn5.setBounds(225, 140, 35, 45);
         btn6.setBounds(260, 140, 35, 45);
-        
         btn7.setBounds(190, 180, 35, 45);
         btn8.setBounds(225, 180, 35, 45);
         btn9.setBounds(260, 180, 35, 45);
-        
         btn0.setBounds(225, 220, 35, 45);
-        
         resultado.setBounds(260, 220, 35, 45);
         btnBorrar.setBounds(190, 220, 35, 45);
         
+        
+        // Creo los listeners de la botonera
         suma.addActionListener(sumas);
         resta.addActionListener(restas);
         div.addActionListener(divides);
@@ -131,8 +115,8 @@ static double resul = 0;
         
       
         // Añado los componentes al Panel
-        panel.add(txtDisplay);
-        panel.add(txtSecondDisplay);
+        panel.add(BarDisplay1);
+        panel.add(BarDisplay2);
         panel.add(suma);
         panel.add(resta);
         panel.add(multi);
@@ -149,15 +133,11 @@ static double resul = 0;
         panel.add(btn9);
         panel.add(btnBorrar);
         panel.add(resultado);
-  
         
-        
-     
-   
-        
+        //Seteamos los botones en el panel
         setContentPane(panel);
         
-       txtSecondDisplay.setText("Calculadora INC");
+       BarDisplay2.setText("Hagamos cuentas...");
        
             // Título de la ventana
        setTitle("ilCalculattoreNovissimo");
@@ -172,58 +152,61 @@ static double resul = 0;
        
         }
         
-            
+//Funcion para des/activar todos los botones salvo los de operacion
+void ActivarBotones(boolean v){
+
+            BarDisplay1.setEditable(v);
+            btn1.setEnabled(v);
+            btn2.setEnabled(v);
+            btn3.setEnabled(v);
+            btn4.setEnabled(v);
+            btn5.setEnabled(v);
+            btn6.setEnabled(v);
+            btn7.setEnabled(v);
+            btn8.setEnabled(v);
+            btn9.setEnabled(v);
+            btn0.setEnabled(v);
+            resultado.setEnabled(v);           
+}
+
+//Funcion para des/activar los botones de operacion
+void ActivarOps(boolean v){
+            suma.setEnabled(v);
+            resta.setEnabled(v);
+            div.setEnabled(v);
+            multi.setEnabled(v);
+}
 
 
+//Escucho la accion del boton 
 ActionListener sumas = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
             
-           operacion = e.getActionCommand(); 
-           String varSumas = txtSecondDisplay.getText();
-            txtDisplay.setEditable(true);
-            btn1.setEnabled(true);
-            btn2.setEnabled(true);
-            btn3.setEnabled(true);
-            btn4.setEnabled(true);
-            btn5.setEnabled(true);
-            btn6.setEnabled(true);
-            btn7.setEnabled(true);
-            btn8.setEnabled(true);
-            btn9.setEnabled(true);
-            btn0.setEnabled(true);
-            resultado.setEnabled(true);
+           operacion = e.getActionCommand(); //Seteo el tipo de operacion [+,-,*./]
+           ActivarBotones(true);       //Activo la botonera
+           String factor1 = BarDisplay1.getText(); //Tomo el primer factor
+           double fact1 = Long.parseLong(factor1);
            
+          
             
-if("Calculadora INC".equals(varSumas) ){
-    
-    
-      suma.setEnabled(false);
-      resta.setEnabled(false);
-      div.setEnabled(false);
-      multi.setEnabled(false);
-    
-  String factor1 = txtDisplay.getText();
+            if(fact1 > 0){ //Pedimos el segundo factor si existe el primero
+                ActivarOps(false); //Desactiva el resto de operaciones 
+                calcu.setFactor1(fact1);//Setea el primer factor
+                BarDisplay2.setText("+ " + fact1 ); //Dibujamos el primer factor
+            }
 
-long fact1 = Long.parseLong(factor1);
+            
+            if(abierta == true){ //Si existe un resultado anterior lo seteamos como el factor 1 y lo ponemos en la barra de abajo 
+                calcu.setFactor1(resul);
+                BarDisplay2.setText("+ " + resul);
+            }
 
-calcu.setFactor1(fact1);
-txtSecondDisplay.setText("Suma");
+            //Dejamos en blanco para el siguiente factor
 
+            BarDisplay1.setText("");
 
-
-
-
-}else{
-        
-    calcu.setFactor1(resul);
-    txtSecondDisplay.setText("+ " + resul);
-
-}
-
-txtDisplay.setText("");
-
-}
+            }
        
    };     
 
@@ -231,47 +214,24 @@ ActionListener restas = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
             
-            operacion = e.getActionCommand();
-            String varRestas = txtSecondDisplay.getText();
-            txtDisplay.setEditable(true);
-            btn1.setEnabled(true);
-            btn2.setEnabled(true);
-            btn3.setEnabled(true);
-            btn4.setEnabled(true);
-            btn5.setEnabled(true);
-            btn6.setEnabled(true);
-            btn7.setEnabled(true);
-            btn8.setEnabled(true);
-            btn9.setEnabled(true);
-            btn0.setEnabled(true);
-            resultado.setEnabled(true);
+                operacion = e.getActionCommand();   
+                ActivarBotones(true);   
+                String factor1 = BarDisplay1.getText();
+                double fact1 = Double.parseDouble(factor1);
         
-           
+        
+               if(fact1 > 0) {
+                   ActivarOps(false);
+                   calcu.setFactor1(fact1);
+                   BarDisplay2.setText("- "+ fact1);
+               }
 
-            
+               if(abierta == true){
+                   calcu.setFactor1(resul);
+                   BarDisplay2.setText("- " + resul);
+               }
 
- if( "Calculadora INC".equals(varRestas)){
-     
-      suma.setEnabled(false);
-      resta.setEnabled(false);
-      div.setEnabled(false);
-      multi.setEnabled(false);
-     
-                
-    String factor1 = txtDisplay.getText();
-    long fact1 = Long.parseLong(factor1);
-    calcu.setFactor1(fact1);
-    txtSecondDisplay.setText("Resta");
-
-}else{
-     
-  
-    calcu.setFactor1(resul);
-    txtSecondDisplay.setText("- " + resul);
- 
-}
-
-txtDisplay.setText("");
+               BarDisplay1.setText("");
 
 
 }
@@ -286,45 +246,25 @@ ActionListener divides = new ActionListener(){
         public void actionPerformed(ActionEvent e){ 
         
             operacion = e.getActionCommand();
-            String varDivides = txtSecondDisplay.getText();
-            txtDisplay.setEditable(true);
-            btn1.setEnabled(true);
-            btn2.setEnabled(true);
-            btn3.setEnabled(true);
-            btn4.setEnabled(true);
-            btn5.setEnabled(true);
-            btn6.setEnabled(true);
-            btn7.setEnabled(true);
-            btn8.setEnabled(true);
-            btn9.setEnabled(true);
-            btn0.setEnabled(true);
-            resultado.setEnabled(true);
+            ActivarBotones(true);
+            String factor1 = BarDisplay1.getText();
+            double fact1 = Long.parseLong(factor1);
             
-if( "Calculadora INC".equals(varDivides)){
-    
-      suma.setEnabled(false);
-      resta.setEnabled(false);
-      div.setEnabled(false);
-      multi.setEnabled(false);
-    
-     String factor1 = txtDisplay.getText();
-     long fact1 = Long.parseLong(factor1);
-     calcu.setFactor1(fact1);
-     txtSecondDisplay.setText("Division");
-                
-}else{
-    
-    
-    calcu.setFactor1(resul);
-    txtSecondDisplay.setText("/ "+ resul);
-    
-    
-    
+            if(fact1 > 0){
 
-}
+                 ActivarOps(false);
+                 calcu.setFactor1(fact1);
+                 BarDisplay2.setText(" / "+ fact1);
+            }
+
+            if((abierta == true )){
+                calcu.setFactor1(resul);
+                BarDisplay2.setText("/ "+ resul);
+
+            }
 
 
-txtDisplay.setText("");
+            BarDisplay1.setText("");
 
 
 
@@ -333,52 +273,26 @@ txtDisplay.setText("");
    };   
 
 ActionListener multiplicas = new ActionListener(){
-    
-    
-    
-
-    
         public void actionPerformed(ActionEvent e){
-            
-String varMultiplicas = txtSecondDisplay.getText();
 
             operacion = e.getActionCommand();
-            txtDisplay.setEditable(true);
-            btn1.setEnabled(true);
-            btn2.setEnabled(true);
-            btn3.setEnabled(true);
-            btn4.setEnabled(true);
-            btn5.setEnabled(true);
-            btn6.setEnabled(true);
-            btn7.setEnabled(true);
-            btn8.setEnabled(true);
-            btn9.setEnabled(true);
-            btn0.setEnabled(true);
-            resultado.setEnabled(true);
+            ActivarBotones(true);
+            String factor1 = BarDisplay1.getText();
+            double fact1 = Long.parseLong(factor1);
 
-if( "Calculadora INC".equals(varMultiplicas)){
-    
+            if(fact1 > 0){
+                ActivarOps(false);
+                calcu.setFactor1(fact1);
+                BarDisplay2.setText("* " + fact1);
+            }
 
-      suma.setEnabled(false);
-      resta.setEnabled(false);
-      div.setEnabled(false);
-      multi.setEnabled(false);
-      
-    String factor1 = txtDisplay.getText();
-    long fact1 = Long.parseLong(factor1);
-    calcu.setFactor1(fact1);
-    txtSecondDisplay.setText("Multiplicacion");
 
-}else{
-    
-    calcu.setFactor1(resul);
-    txtSecondDisplay.setText("* "+ resul);
-    
-    
-}
+            if(abierta == true){
+                calcu.setFactor1(resul);
+                BarDisplay2.setText("* "+ resul);
+            }
 
-txtDisplay.setText("");
-
+            BarDisplay1.setText("");
 
 }
        
@@ -389,71 +303,44 @@ ActionListener resultados = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-            String factor2 = txtDisplay.getText();
+            //Cancelamos la edicion mediante teclado de la barra de arriba
+            BarDisplay1.setEditable(false);
+            //Tomamos el segundo factor
             
-            txtDisplay.setEditable(false);
-
-            long fact2 = Long.parseLong(factor2);
-            
-
+            String factor2 = BarDisplay1.getText();
+            double fact2 = Long.parseLong(factor2);
            
-            
+            //Seteamos el segundo factor
             calcu.setFactor2(fact2);
             
-           double f1 = calcu.getFactor1();
-           System.out.println(f1);
-           double f2 = calcu.getFactor2();
-           
-           if (f1 == 0);
-            resul = 0;
-            
-            if (f2 == 0);
-            resul = 0;
-            
-           System.out.println(f2);
+            double f1 = calcu.getFactor1();
+            double f2 = calcu.getFactor2();
             
             
-            var op = txtSecondDisplay.getText();
+            //Desactivamos botones y activamos operaciones
             
-            btn1.setEnabled(false);
-            btn2.setEnabled(false);
-            btn3.setEnabled(false);
-            btn4.setEnabled(false);
-            btn5.setEnabled(false);
-            btn6.setEnabled(false);
-            btn7.setEnabled(false);
-            btn8.setEnabled(false);
-            btn9.setEnabled(false);
-            btn0.setEnabled(false);
-            resultado.setEnabled(false);
-            suma.setEnabled(true);
-            resta.setEnabled(true);
-            div.setEnabled(true);
-            multi.setEnabled(true);
-            
+            ActivarBotones(false); 
+            ActivarOps(true);
          
             
+            //Ahora se elige el tipo
             switch (operacion) {
             
                 case "+":
-                    
                      resul = f1 + f2;
+                     calcu.setResultado(resul);
                      String valResultado = String.valueOf(resul);
-                     txtSecondDisplay.setText( f1 + " + " + f2 + " = "+valResultado);
-                     
+                     BarDisplay2.setText( f1 + " + " + f2 + " = "+valResultado);    
                      calcu.setFactor1(0);
                      calcu.setFactor2(0);
-                                break;
-                                
-                    
-              
-                
+                     abierta = true;
+                                break;         
                 case "-":
                     
                      resul = f1 - f2;
+                     calcu.setResultado(resul);
                      String valResultadoResta = String.valueOf(resul);
-                     txtSecondDisplay.setText(f1 + " - " + f2 + " = "+valResultadoResta);
-                     
+                     BarDisplay2.setText(f1 + " - " + f2 + " = "+valResultadoResta);     
                      calcu.setFactor1(0);
                      calcu.setFactor2(0);
                     break;
@@ -461,40 +348,29 @@ ActionListener resultados = new ActionListener(){
                 case "/":
                     if ((f1 == 0)||(f2 == 0)){
                     resul = 0;
-                    txtSecondDisplay.setText("Error");
-                                btn1.setEnabled(false);
-                                btn2.setEnabled(false);
-                                btn3.setEnabled(false);
-                                btn4.setEnabled(false);
-                                btn5.setEnabled(false);
-                                btn6.setEnabled(false);
-                                btn7.setEnabled(false);
-                                btn8.setEnabled(false);
-                                btn9.setEnabled(false);
-                                btn0.setEnabled(false);
-                                resultado.setEnabled(false);
-                                suma.setEnabled(false);
-                                resta.setEnabled(false);
-                                div.setEnabled(false);
-                                multi.setEnabled(false);
+                    calcu.setResultado(resul);
+                    BarDisplay2.setText("Error");
+                             ActivarBotones(false);
+                             ActivarOps(false);
                     }else{
-                    resul = f1 / f2;
+                     resul = f1 / f2;
+                     calcu.setResultado(resul);
                      String valResultadodiv = String.valueOf(resul);
-                     txtSecondDisplay.setText(f1 + " / " + f2 + " = "+valResultadodiv);}
-                     
-                     
+                     BarDisplay2.setText(f1 + " / " + f2 + " = "+valResultadodiv);}       
                      calcu.setFactor1(0);
                      calcu.setFactor2(0);
+                     abierta = true;
                     break;
                     
                 case "*":
                      
                      resul = f1 * f2;
+                     calcu.setResultado(resul);
                      String valResultadoMul = String.valueOf(resul);
-                     txtSecondDisplay.setText(f1 + " * " + f2 + " = "+ valResultadoMul);
-                     
+                     BarDisplay2.setText(f1 + " * " + f2 + " = "+ valResultadoMul);
                      calcu.setFactor1(0);
                      calcu.setFactor2(0);
+                     abierta = true;
                     break;
             
             }
@@ -507,9 +383,9 @@ ActionListener boton0 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = txtDisplay.getText() + btn0.getText();
+String Display = BarDisplay1.getText() + btn0.getText();
 
-txtDisplay.setText(Display);
+BarDisplay1.setText(Display);
 
 
 }
@@ -518,9 +394,9 @@ ActionListener boton1 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = txtDisplay.getText() + btn1.getText();
+String Display = BarDisplay1.getText() + btn1.getText();
 
-txtDisplay.setText(Display);
+BarDisplay1.setText(Display);
 
 
 }
@@ -529,9 +405,9 @@ ActionListener boton2 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = txtDisplay.getText() + btn2.getText();
+String Display = BarDisplay1.getText() + btn2.getText();
 
-txtDisplay.setText(Display);
+BarDisplay1.setText(Display);
 
 
 }
@@ -540,9 +416,9 @@ ActionListener boton3 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = txtDisplay.getText() + btn3.getText();
+String Display = BarDisplay1.getText() + btn3.getText();
 
-txtDisplay.setText(Display);
+BarDisplay1.setText(Display);
 
 
 }
@@ -551,9 +427,9 @@ ActionListener boton4 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = txtDisplay.getText() + btn4.getText();
+String Display = BarDisplay1.getText() + btn4.getText();
 
-txtDisplay.setText(Display);
+BarDisplay1.setText(Display);
 
 
 }
@@ -562,9 +438,9 @@ ActionListener boton5 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = txtDisplay.getText() + btn5.getText();
+String Display = BarDisplay1.getText() + btn5.getText();
 
-txtDisplay.setText(Display);
+BarDisplay1.setText(Display);
 
 
 }
@@ -573,9 +449,9 @@ ActionListener boton6 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = txtDisplay.getText() + btn6.getText();
+String Display = BarDisplay1.getText() + btn6.getText();
 
-txtDisplay.setText(Display);
+BarDisplay1.setText(Display);
 
 
 }
@@ -584,9 +460,9 @@ ActionListener boton7 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = txtDisplay.getText() + btn7.getText();
+String Display = BarDisplay1.getText() + btn7.getText();
 
-txtDisplay.setText(Display);
+BarDisplay1.setText(Display);
 
 
 }
@@ -595,9 +471,9 @@ ActionListener boton8 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = txtDisplay.getText() + btn8.getText();
+String Display = BarDisplay1.getText() + btn8.getText();
 
-txtDisplay.setText(Display);
+BarDisplay1.setText(Display);
 
 
 }
@@ -606,9 +482,9 @@ ActionListener boton9 = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
 
-String Display = txtDisplay.getText() + btn9.getText();
+String Display = BarDisplay1.getText() + btn9.getText();
 
-txtDisplay.setText(Display);
+BarDisplay1.setText(Display);
 
         }
 };
@@ -617,23 +493,13 @@ ActionListener borrar = new ActionListener(){
     
         public void actionPerformed(ActionEvent e){
             
-                    btn1.setEnabled(true);
-                    btn2.setEnabled(true);
-                    btn3.setEnabled(true);
-                    btn4.setEnabled(true);
-                    btn5.setEnabled(true);
-                    btn6.setEnabled(true);
-                    btn7.setEnabled(true);
-                    btn8.setEnabled(true);
-                    btn9.setEnabled(true);
-                    btn0.setEnabled(true);
-                    resultado.setEnabled(true);
-                    txtDisplay.setText("");
-                    suma.setEnabled(true);
-                    resta.setEnabled(true);
-                    div.setEnabled(true);
-                     multi.setEnabled(true);
-                    txtSecondDisplay.setText("Calculadora INC");
+            //Ponemos por defecto todo y cerramos la cuenta
+                    ActivarBotones(true);
+                    ActivarOps(true);
+                    abierta = false;
+           
+                    BarDisplay1.setText("");
+                    BarDisplay2.setText("Hagamos cuentas...");
                     calcu.setFactor1(0);
                     calcu.setFactor2(0);
 
@@ -650,28 +516,12 @@ ActionListener borrar = new ActionListener(){
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-     
-
-        
-        
-       
-        
-       
-        
-        
         
         PROG07 ventanaApp = new PROG07();
         
-       
-        
         ventanaApp.setDefaultCloseOperation(EXIT_ON_CLOSE);
         
-        ventanaApp.setVisible(true);
-  
-        // TODO code application logic here
-        
-        
-      
+        ventanaApp.setVisible(true); 
         
     }
     

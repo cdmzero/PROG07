@@ -16,24 +16,23 @@ public class Calculadora {
     double resultado = 0;
     double factor1   = 0;
     double factor2   = 0;
-    String operacion = null;
 
         
     public Calculadora() {
     }
     
-      public Calculadora(double resultado, double factor1, double factor2, String operacion) {
+      public Calculadora(double resultado, double factor1, double factor2) {
          this.resultado = resultado;
          this.factor1 = factor1;
          this.factor2 = factor2;
-         this.operacion = operacion;
+         
     }
 
     
     
     @Override
     public String toString() {
-        return "Calculadora{" + "resultado=" + resultado + ", factor1=" + factor1 + ", factor2=" + factor2 + ", operacion=" + operacion + '}';
+        return "Calculadora{" + "resultado=" + resultado + ", factor1=" + factor1 + ", factor2=" + factor2 +'}';
     }
 
     public void setResultado(double resultado) {
@@ -48,9 +47,7 @@ public class Calculadora {
         this.factor2 = factor2;
     }
 
-    public void setBoton(String operacion) {
-        this.operacion = operacion;
-    }
+
 
     
 
@@ -66,9 +63,6 @@ public class Calculadora {
         return factor2;
     }
 
-    public String getBoton() {
-        return operacion;
-    }
 
 
     
